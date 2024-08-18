@@ -18,6 +18,7 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
         {isAgentThinking && (
           <div className="message-container agent">
             <Message
+              style={{ alignItems: 'start'}}
               severity='info'
               content={
                 <React.Fragment>
@@ -36,6 +37,7 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
         {messages.slice().reverse().map((message, index) => (
           <div key={index} className={`message-container ${message.sender}`}>
             <Message
+              style={{ alignItems: 'start'}}
               severity={message.sender === 'user' ? 'success' : 'info'}
               content={
                 <React.Fragment>
