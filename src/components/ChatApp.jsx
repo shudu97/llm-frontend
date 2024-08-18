@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import {Splitter, SplitterPanel} from 'primereact/splitter';
+
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
-import { TextEditor } from './ui/text_editor';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
@@ -48,32 +47,25 @@ const ChatApp = () => {
   };
 
   return (
-    <Splitter style={{ height: '100vh'}} pt={{'gutterHandler': {style: {display: 'none'}}}}>
-      <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
-        <div style={{
-          width: '100%', 
-          height: '100%', 
-          padding: '15px', 
-          display: 'flex', 
-          flexDirection: 'column'
-        }}>
-          <ChatHistory messages={messages} isAgentThinking={isAgentThinking}/>
-          <div className="flex items-center p-6 pt-0">
-            <form onSubmit={sendMessage} className="w-full">
-              <PromptInput
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type a message"
-              />
-            </form>
-          </div>
-        </div>
-      </SplitterPanel>
-      <SplitterPanel className="flex align-items-center justify-content-center" size={75} minSize={10}>
-          <TextEditor />
-      </SplitterPanel>
-    </Splitter>
+    <div style={{
+      width: '100%', 
+      height: '100%', 
+      padding: '15px', 
+      display: 'flex', 
+      flexDirection: 'column'
+    }}>
+      <ChatHistory messages={messages} isAgentThinking={isAgentThinking}/>
+      <div className="flex items-center p-6 pt-0">
+        <form onSubmit={sendMessage} className="w-full">
+          <PromptInput
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type a message"
+          />
+        </form>
+      </div>
+    </div>
   );
 };
 

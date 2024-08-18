@@ -1,5 +1,5 @@
 import { Editor } from "primereact/editor"
-import './text_editor.css'
+import './TextEditor.css'
 
 const TextEditor = () => {
     return (
