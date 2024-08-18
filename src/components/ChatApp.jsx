@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
 
-import './ChatApp.css';
+import './styles/ChatApp.css';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Message } from 'primereact/message';
 import { Avatar } from 'primereact/avatar';
-import './chat_history.css';  // Import the CSS file
+import '../styles/ChatApp.css';  // Import the CSS file
 
 const ChatHistory = ({ messages, isAgentThinking }) => {
   const scrollRef = useRef(null);
