@@ -57,14 +57,7 @@ const ChatApp = () => {
           display: 'flex', 
           flexDirection: 'column'
         }}>
-          <div style={{
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'column-reverse',
-            overflow: 'hidden'
-          }}>
-            <ChatHistory messages={messages} isAgentThinking={isAgentThinking}/>
-          </div>
+          <ChatHistory messages={messages} isAgentThinking={isAgentThinking}/>
           <div className="flex items-center p-6 pt-0">
             <form onSubmit={sendMessage} className="w-full">
               <PromptInput

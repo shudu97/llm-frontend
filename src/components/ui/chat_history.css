@@ -1,3 +1,10 @@
+.chat-history-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+}
+
 .chat-history-container {
     overflow-y: auto;
     display: flex;
@@ -5,32 +12,32 @@
     max-height: 100%;
     scrollbar-width: none;  /* For Firefox */
     -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-  }
+}
   
-  /* For Webkit browsers like Chrome/Safari/Opera */
-  .chat-history-container::-webkit-scrollbar {
+/* For Webkit browsers like Chrome/Safari/Opera */
+.chat-history-container::-webkit-scrollbar {
     display: none;
-  }
-  
-  .message-container {
+}
+
+.message-container {
     display: flex;
     margin-bottom: 10px;
-  }
-  
-  .message-container.user {
+}
+
+.message-container.user {
     justify-content: flex-end;
-  }
-  
-  .message-container.agent {
+}
+
+.message-container.agent {
     justify-content: flex-start;
-  }
-  
-  .avatar {
+}
+
+.avatar {
     margin-right: 10px;
     background-color: #fff;
     min-width: 32px;
-  }
-  
-  .message-content {
+}
+
+.message-content {
     line-height: 1.5rem;
-  }
+}
