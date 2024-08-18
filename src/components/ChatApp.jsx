@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Splitter, SplitterPanel} from 'primereact/splitter';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
-import { Editor } from 'primereact/editor';
+import { TextEditor } from './ui/text_editor';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
@@ -71,7 +71,7 @@ const ChatApp = () => {
         </div>
       </SplitterPanel>
       <SplitterPanel className="flex align-items-center justify-content-center" size={75} minSize={10}>
-          <Editor style={{border: 'none'}} pt={{root: {style: {width: '-webkit-fill-available', height: '96vh'}}}}/>
+          <TextEditor />
       </SplitterPanel>
     </Splitter>
   );
