@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import {Splitter, SplitterPanel} from 'primereact/splitter';
+import { ScrollPanel } from 'primereact/scrollpanel'
 import { PromptInput } from "./ui/input";
 
 const ChatApp = () => {
@@ -51,14 +52,16 @@ const ChatApp = () => {
       <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
         <Card className="w-full max-w-md mx-auto mt-10" style={{width: '100%', 'padding': '15px'}}>
           <CardHeader className="text-2xl font-bold text-center">Chat App</CardHeader>
-          <CardContent className="h-96 overflow-y-auto">
-            {messages.map((message, index) => (
-              <div key={index} className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                <span className={`inline-block p-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-                  {message.content}
-                </span>
-              </div>
-            ))}
+          <CardContent className="h-96">
+            <ScrollPanel>
+              {messages.map((message, index) => (
+                <div key={index} className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                  <span className={`inline-block p-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+                    {message.content}
+                  </span>
+                </div>
+              ))}
+            </ScrollPanel>
           </CardContent>
           <CardFooter>
             <form onSubmit={sendMessage} className="w-full">
