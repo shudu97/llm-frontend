@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
 
+import './ChatApp.css';
+
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -47,13 +49,7 @@ const ChatApp = () => {
   };
 
   return (
-    <div style={{
-      width: '100%', 
-      height: '100%', 
-      padding: '15px', 
-      display: 'flex', 
-      flexDirection: 'column'
-    }}>
+    <div className="chat-app-panel">
       <ChatHistory messages={messages} isAgentThinking={isAgentThinking}/>
       <div className="flex items-center p-6 pt-0">
         <form onSubmit={sendMessage} className="w-full">
