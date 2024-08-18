@@ -1,10 +1,11 @@
 import { Editor } from "primereact/editor"
+import './text_editor.css'
 
 const TextEditor = () => {
     return (
         <Editor 
             style={{border: 'none'}} 
-            pt={{root: {style: {width: '-webkit-fill-available', height: '96vh'}}}}
+            pt={{root: {className: 'text-editor-root'}}}
         />
     )
 }
