@@ -30,7 +30,7 @@ const ChatApp = () => {
       const data = await response.json();
       
       // Add AI response to the chat
-      setMessages(prevMessages => [...prevMessages, { content: data.message, sender: 'ai' }]);
+      setMessages(prevMessages => [...prevMessages, { content: data.message, sender: 'agent' }]);
     } catch (error) {
       console.error('Error:', error);
       // Handle error (e.g., show an error message to the user)

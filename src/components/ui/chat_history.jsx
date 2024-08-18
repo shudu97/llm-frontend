@@ -1,5 +1,7 @@
 import React from 'react';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import { Message } from 'primereact/message';
+import { Avatar } from 'primereact/avatar';
 
 const ChatHistoryPanel = React.forwardRef(({ className, ...props }, ref) => (
   <div ref={ref} className={`p-6 pt-0 ${className}`} {...props} />
@@ -11,10 +13,20 @@ const ChatHistory = ({ messages }) => {
     <ChatHistoryPanel>
       <ScrollPanel style={{ width: '100%', height: '100%' }}>
         {messages.map((message, index) => (
-          <div key={index} className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-            <div className={`inline-block p-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}>
-              {message.content}
-            </div>
+          <div style={{display: 'flex', "justify-content": `${message.sender === 'user' ? 'end' : 'start'}`}}>
+            <Message 
+              key={index} 
+              severity= {message.sender === 'user' ? 'success' : 'info'}
+              // text={message.content}
+              content={
+                <React.Fragment>
+                  <Avatar label={message.sender === 'user' ? "U" : "A"} size='medium' shape='circle' style={{'margin-right': '10px', backgroundColor: '#fff', "min-width": 32}}/>
+                  <div>{message.content}</div>
+                </React.Fragment>
+              }
+              style={{'margin-bottom': '10px'}}
+            >
+            </Message>
           </div>
         ))}
       </ScrollPanel>
