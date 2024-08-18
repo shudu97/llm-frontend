@@ -57,4 +57,6 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
   );
 };
 
+ChatHistory.displayName = 'ChatHistory'
+
 export { ChatHistory };
