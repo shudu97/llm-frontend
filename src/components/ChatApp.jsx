@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
-import { Input } from "./ui/input";
-import { Button } from "primereact/button";
+import { PromptInput } from "./ui/input";
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
@@ -60,22 +59,12 @@ const ChatApp = () => {
       </CardContent>
       <CardFooter>
         <form onSubmit={sendMessage} className="w-full">
-          <div className='p-inputgroup flex-1'>
-            <Input
-              type="textarea"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              className="flex-grow mr-2"
-              placeholder="Type a message"
-            />
-            <Button
-              icon="pi pi-send"
-              className="p-button-rounded"
-              aria-label="Send"
-              type="submit"
-            />
-          </div>
+          <PromptInput
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type a message"
+          />
         </form>
       </CardFooter>
     </Card>
