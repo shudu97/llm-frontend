@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Message } from 'primereact/message';
 import { Avatar } from 'primereact/avatar';
+import './chat_history.css';  // Import the CSS file
 
 const ChatHistory = ({ messages, isAgentThinking }) => {
   const scrollRef = useRef(null);
@@ -12,27 +13,9 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
   }, [messages, isAgentThinking]);
 
   return (
-    <div 
-      ref={scrollRef}
-      style={{
-        overflowY: 'auto',
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        maxHeight: '100%',
-        scrollbarWidth: 'none',  // For Firefox
-        msOverflowStyle: 'none',  // For Internet Explorer and Edge
-      }}
-    >
-      <style>
-        {`
-          /* For Webkit browsers like Chrome/Safari/Opera */
-          .chat-history::-webkit-scrollbar {
-            display: none;
-          }
-        `}
-      </style>
+    <div ref={scrollRef} className="chat-history-container">
       {isAgentThinking && (
-        <div style={{display: 'flex', justifyContent: 'flex-start', marginBottom: '10px'}}>
+        <div className="message-container agent">
           <Message
             severity='info'
             content={
@@ -41,16 +24,16 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
                   icon="pi pi-spin pi-spinner" 
                   size='medium' 
                   shape='circle' 
-                  style={{marginRight: '10px', backgroundColor: '#fff', minWidth: 32}}
+                  className="avatar"
                 />
-                <div style={{lineHeight: '1.5rem'}}>Thinking...</div>
+                <div className="message-content">Thinking...</div>
               </React.Fragment>
             }
           />
         </div>
       )}
       {messages.slice().reverse().map((message, index) => (
-        <div key={index} style={{display: 'flex', justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start', marginBottom: '10px'}}>
+        <div key={index} className={`message-container ${message.sender}`}>
           <Message
             severity={message.sender === 'user' ? 'success' : 'info'}
             content={
@@ -59,9 +42,9 @@ const ChatHistory = ({ messages, isAgentThinking }) => {
                   label={message.sender === 'user' ? "U" : "A"} 
                   size='medium' 
                   shape='circle' 
-                  style={{marginRight: '10px', backgroundColor: '#fff', minWidth: 32}}
+                  className="avatar"
                 />
-                <div style={{lineHeight: '1.5rem'}}>{message.content}</div>
+                <div className="message-content">{message.content}</div>
               </React.Fragment>
             }
           />

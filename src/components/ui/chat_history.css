@@ -1,0 +1,36 @@
+.chat-history-container {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 100%;
+    scrollbar-width: none;  /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  }
+  
+  /* For Webkit browsers like Chrome/Safari/Opera */
+  .chat-history-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .message-container {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .message-container.user {
+    justify-content: flex-end;
+  }
+  
+  .message-container.agent {
+    justify-content: flex-start;
+  }
+  
+  .avatar {
+    margin-right: 10px;
+    background-color: #fff;
+    min-width: 32px;
+  }
+  
+  .message-content {
+    line-height: 1.5rem;
+  }
