@@ -21,7 +21,7 @@ const ChatHistory = ({ messages }) => {
               content={
                 <React.Fragment>
                   <Avatar label={message.sender === 'user' ? "U" : "A"} size='medium' shape='circle' style={{'margin-right': '10px', backgroundColor: '#fff', "min-width": 32}}/>
-                  <div>{message.content}</div>
+                  <div style={{lineHeight: '1.5rem'}}>{message.content}</div>
                 </React.Fragment>
               }
               style={{'margin-bottom': '10px'}}
