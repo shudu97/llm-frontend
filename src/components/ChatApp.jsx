@@ -3,6 +3,8 @@ import {Splitter, SplitterPanel} from 'primereact/splitter';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
 
+import { Editor } from 'primereact/editor';
+
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -47,7 +49,7 @@ const ChatApp = () => {
   };
 
   return (
-    <Splitter style={{ height: '100vh', border: 'none'}}>
+    <Splitter style={{ height: '100vh'}}>
       <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
         <div style={{width: '100%', 'padding': '15px', 'align-self': 'flex-end'}}>
           <ChatHistory messages={messages} />
@@ -64,7 +66,7 @@ const ChatApp = () => {
         </div>
       </SplitterPanel>
       <SplitterPanel className="flex align-items-center justify-content-center" size={75} minSize={10}>
-          Editor
+          <Editor style={{border: 'none'}} pt={{root: {style: {width: '-webkit-fill-available', height: '96vh'}}}}/>
       </SplitterPanel>
     </Splitter>
   );
