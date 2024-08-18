@@ -47,7 +47,7 @@ const ChatApp = () => {
   };
 
   return (
-    <Splitter style={{ height: '100vh'}}>
+    <Splitter style={{ height: '100vh', border: 'none'}}>
       <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
         <div style={{width: '100%', 'padding': '15px', 'align-self': 'flex-end'}}>
           <ChatHistory messages={messages} />
