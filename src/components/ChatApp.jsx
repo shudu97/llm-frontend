@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Card, CardFooter, CardHeader } from "./ui/card";
 import {Splitter, SplitterPanel} from 'primereact/splitter';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
@@ -50,9 +49,9 @@ const ChatApp = () => {
   return (
     <Splitter style={{ height: '100vh'}}>
       <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
-        <Card className="w-full max-w-md mx-auto mt-10" style={{width: '100%', 'padding': '15px', 'align-self': 'flex-end'}}>
+        <div style={{width: '100%', 'padding': '15px', 'align-self': 'flex-end'}}>
           <ChatHistory messages={messages} />
-          <CardFooter>
+          <div classname="flex items-center p-6 pt-0">
             <form onSubmit={sendMessage} className="w-full">
               <PromptInput
                 value={inputMessage}
@@ -61,8 +60,8 @@ const ChatApp = () => {
                 placeholder="Type a message"
               />
             </form>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </SplitterPanel>
       <SplitterPanel className="flex align-items-center justify-content-center" size={75} minSize={10}>
           Editor
