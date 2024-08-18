@@ -50,8 +50,7 @@ const ChatApp = () => {
   return (
     <Splitter style={{ height: '100vh'}}>
       <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
-        <Card className="w-full max-w-md mx-auto mt-10" style={{width: '100%', 'padding': '15px'}}>
-          <CardHeader className="text-2xl font-bold text-center">Chat App</CardHeader>
+        <Card className="w-full max-w-md mx-auto mt-10" style={{width: '100%', 'padding': '15px', 'align-self': 'flex-end'}}>
           <ChatHistory messages={messages} />
           <CardFooter>
             <form onSubmit={sendMessage} className="w-full">
