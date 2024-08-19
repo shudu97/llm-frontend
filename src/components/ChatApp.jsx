@@ -3,13 +3,14 @@ import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
 import './styles/ChatApp.css';
 
-const ChatApp = () => {
+const ChatApp = ({ onEditorUpdate }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isAgentThinking, setIsAgentThinking] = useState(false);
   const [streamingMessage, setStreamingMessage] = useState('');
   const eventSourceRef = useRef(null);
   const hasReceivedResponse = useRef(false);
+  const editorContentRef = useRef('');
 
   const sendMessage = useCallback(async (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ const ChatApp = () => {
     setIsAgentThinking(true);
     setStreamingMessage('');
     hasReceivedResponse.current = false;
+    editorContentRef.current = '';
 
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
@@ -28,8 +30,19 @@ const ChatApp = () => {
     eventSourceRef.current = new EventSource(`http://localhost:8000/chat?message=${encodeURIComponent(inputMessage)}`);
 
     eventSourceRef.current.onmessage = (event) => {
-      const newContent = event.data;
-      setStreamingMessage(prev => prev + newContent);
+      const { content, toEditor, isNotification } = JSON.parse(event.data);
+      if (toEditor) {
+        editorContentRef.current += content;
+        // Update editor content only when the entire message is received
+        if (content.endsWith('.')) {
+          onEditorUpdate(editorContentRef.current);
+          editorContentRef.current = '';
+        }
+      } else if (isNotification) {
+        setMessages(prevMessages => [...prevMessages, { content, sender: 'agent' }]);
+      } else {
+        setStreamingMessage(prev => prev + content);
+      }
       setIsAgentThinking(false);
       hasReceivedResponse.current = true;
     };
@@ -46,7 +59,7 @@ const ChatApp = () => {
     eventSourceRef.current.onopen = () => {
       setIsAgentThinking(true);
     };
-  }, [inputMessage]);
+  }, [inputMessage, onEditorUpdate]);
 
   useEffect(() => {
     return () => {
