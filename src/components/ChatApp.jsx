@@ -33,7 +33,6 @@ const ChatApp = ({ onEditorUpdate }) => {
       const { content, toEditor, isNotification } = JSON.parse(event.data);
       if (toEditor) {
         editorContentRef.current += content;
-        // Update editor content only when the entire message is received
         if (content.endsWith('.')) {
           onEditorUpdate(editorContentRef.current);
           editorContentRef.current = '';
