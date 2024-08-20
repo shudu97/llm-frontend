@@ -8,11 +8,23 @@ import './App.css';
 function App() {
   const [editorContent, setEditorContent] = useState('');
   const [activePanel, setActivePanel] = useState('chat');
+  const [chatState, setChatState] = useState({
+    messages: [],
+    inputMessage: '',
+    isAgentThinking: false,
+    streamingMessage: ''
+  });
 
   const renderLeftPanel = () => {
     switch (activePanel) {
       case 'chat':
-        return <ChatApp onEditorUpdate={setEditorContent} />;
+        return (
+          <ChatApp 
+            onEditorUpdate={setEditorContent}
+            chatState={chatState}
+            setChatState={setChatState}
+          />
+        );
       case 'history':
         return <div>Chat History Placeholder</div>;
       case 'files':

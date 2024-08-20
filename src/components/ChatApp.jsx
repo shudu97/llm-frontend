@@ -1,13 +1,10 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
 import './styles/ChatApp.css';
 
-const ChatApp = ({ onEditorUpdate }) => {
-  const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isAgentThinking, setIsAgentThinking] = useState(false);
-  const [streamingMessage, setStreamingMessage] = useState('');
+const ChatApp = ({ onEditorUpdate, chatState, setChatState }) => {
+  const { messages, inputMessage, isAgentThinking, streamingMessage } = chatState;
   const eventSourceRef = useRef(null);
   const hasReceivedResponse = useRef(false);
   const editorContentRef = useRef('');
@@ -16,10 +13,13 @@ const ChatApp = ({ onEditorUpdate }) => {
     e.preventDefault();
     if (inputMessage.trim() === '') return;
 
-    setMessages(prevMessages => [...prevMessages, { content: inputMessage, sender: 'user' }]);
-    setInputMessage('');
-    setIsAgentThinking(true);
-    setStreamingMessage('');
+    setChatState(prevState => ({
+      ...prevState,
+      messages: [...prevState.messages, { content: inputMessage, sender: 'user' }],
+      inputMessage: '',
+      isAgentThinking: true,
+      streamingMessage: ''
+    }));
     hasReceivedResponse.current = false;
     editorContentRef.current = '';
 
@@ -38,27 +38,34 @@ const ChatApp = ({ onEditorUpdate }) => {
           editorContentRef.current = '';
         }
       } else if (isNotification) {
-        setMessages(prevMessages => [...prevMessages, { content, sender: 'agent' }]);
+        setChatState(prevState => ({
+          ...prevState,
+          messages: [...prevState.messages, { content, sender: 'agent' }]
+        }));
       } else {
-        setStreamingMessage(prev => prev + content);
+        setChatState(prevState => ({
+          ...prevState,
+          streamingMessage: prevState.streamingMessage + content,
+          isAgentThinking: false
+        }));
       }
-      setIsAgentThinking(false);
       hasReceivedResponse.current = true;
     };
 
     eventSourceRef.current.onerror = (error) => {
       console.error('EventSource failed:', error);
       eventSourceRef.current.close();
-      setIsAgentThinking(false);
-      if (!hasReceivedResponse.current) {
-        setMessages(prevMessages => [...prevMessages, { content: "Sorry, there was an error processing your message.", sender: 'agent' }]);
-      }
+      setChatState(prevState => ({
+        ...prevState,
+        isAgentThinking: false,
+        messages: hasReceivedResponse.current ? prevState.messages : [...prevState.messages, { content: "Sorry, there was an error processing your message.", sender: 'agent' }]
+      }));
     };
 
     eventSourceRef.current.onopen = () => {
-      setIsAgentThinking(true);
+      setChatState(prevState => ({ ...prevState, isAgentThinking: true }));
     };
-  }, [inputMessage, onEditorUpdate]);
+  }, [inputMessage, onEditorUpdate, setChatState]);
 
   useEffect(() => {
     return () => {
@@ -70,17 +77,17 @@ const ChatApp = ({ onEditorUpdate }) => {
 
   useEffect(() => {
     if (streamingMessage) {
-      setMessages(prevMessages => {
-        const newMessages = [...prevMessages];
+      setChatState(prevState => {
+        const newMessages = [...prevState.messages];
         if (newMessages[newMessages.length - 1]?.sender === 'agent') {
           newMessages[newMessages.length - 1].content = streamingMessage;
         } else {
           newMessages.push({ content: streamingMessage, sender: 'agent' });
         }
-        return newMessages;
+        return { ...prevState, messages: newMessages };
       });
     }
-  }, [streamingMessage]);
+  }, [streamingMessage, setChatState]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -100,7 +107,7 @@ const ChatApp = ({ onEditorUpdate }) => {
         <form onSubmit={sendMessage} className="w-full">
           <PromptInput
             value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
+            onChange={(e) => setChatState(prevState => ({ ...prevState, inputMessage: e.target.value }))}
             onKeyPress={handleKeyPress}
             placeholder="Type a message"
           />
