@@ -26,7 +26,7 @@ function App() {
     <div className="app-container">
       <Sidebar setActivePanel={setActivePanel} />
       <div className="main-content">
-        <Splitter style={{ height: '100vh' }}>
+        <Splitter style={{ height: '100vh' }} pt={{'gutterHandler': {style: {display: 'none'}}}}>
           <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
             {renderLeftPanel()}
           </SplitterPanel>
