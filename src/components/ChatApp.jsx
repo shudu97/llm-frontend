@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { Menubar } from 'primereact/menubar';
 import { PromptInput } from "./ui/prompt_input";
 import { ChatHistory } from "./ui/chat_history";
+import { ResetChatButton } from './ui/reset_chat_button';
 import './styles/ChatApp.css';
 
 const ChatApp = ({ onEditorUpdate, chatState, setChatState }) => {
@@ -96,8 +98,50 @@ const ChatApp = ({ onEditorUpdate, chatState, setChatState }) => {
     }
   };
 
+    // New function to reset the chat
+  const resetChat = async () => {
+    // Close the existing EventSource if it's open
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+    }
+
+    // Call the backend to reset the chat
+    try {
+      const response = await fetch('http://localhost:8000/reset-chat', { method: 'POST' });
+      if (!response.ok) {
+        throw new Error('Failed to reset chat on the server');
+      }
+    } catch (error) {
+      console.error('Error resetting chat:', error);
+      // You might want to show an error message to the user here
+    }
+
+    // Reset the local state
+    setChatState({
+      messages: [],
+      inputMessage: '',
+      isAgentThinking: false,
+      streamingMessage: ''
+    });
+
+    // Clear the editor content
+    onEditorUpdate('');
+    
+    // Reset other refs
+    hasReceivedResponse.current = false;
+    editorContentRef.current = '';
+  };
+
   return (
     <div className="chat-app-panel">
+      <Menubar 
+        end={
+          <ResetChatButton 
+            onClick={resetChat} 
+          />
+        }
+        // style={{ backgroundColor: 'rgba(0, 0, 0, 0)', border: 'none' }}
+      />
       <ChatHistory 
         messages={messages} 
         isAgentThinking={isAgentThinking} 
