@@ -135,12 +135,15 @@ const ChatApp = ({ onEditorUpdate, chatState, setChatState }) => {
   return (
     <div className="chat-app-panel">
       <Menubar 
+        start={
+          <h3>Model Document Agent</h3>
+        }
         end={
           <ResetChatButton 
             onClick={resetChat} 
           />
         }
-        // style={{ backgroundColor: 'rgba(0, 0, 0, 0)', border: 'none' }}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0)', border: 'none' }}
       />
       <ChatHistory 
         messages={messages} 
